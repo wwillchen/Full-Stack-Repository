@@ -38,6 +38,7 @@ const Part = ({course}) => (
     <p>{course.name} {course.exercises}</p>
   </div>
 )
+
 const Total = (props) => {
   return (
   <div>

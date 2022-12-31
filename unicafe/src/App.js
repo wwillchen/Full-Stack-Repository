@@ -1,18 +1,22 @@
 import { useState } from 'react'
 
 const App = () => {
-  const [good, setGood] = useState(0)
-  const [neutral, setNeutral] = useState(0)
-  const [bad, setBad] = useState(0)
+  const [clicks, setClicks] = useState({good: 0, neutral: 0, bad: 0})
+  
+  const increaseGood = () => 
+    setClicks({...clicks, good: clicks.good + 1})
+  const increaseNeutral = () => 
+    setClicks({...clicks, neutral: clicks.neutral + 1})
+  const increaseBad = () => 
+    setClicks({...clicks, bad: clicks.bad + 1})
 
   return (
     <div>
       <h1>give feedback</h1>
-      <button onClick={() => setGood(good + 1)}>good</button>
-      <button onClick={() => setNeutral(neutral + 1)}>neutral</button>
-      <button onClick={() => setBad(bad + 1)}>bad</button>
+      <Button increaseGood={increaseGood} increaseNeutral={increaseNeutral} increaseBad={increaseBad}/>
       <h1>statistics</h1>
-      <Statistics good={good} neutral={neutral} bad={bad} total={good + neutral + bad}/>
+      <Statistics good={clicks.good} neutral={clicks.neutral} bad={clicks.bad} 
+                  total={clicks.good + clicks.neutral + clicks.bad}/>
       <p></p> 
     </div>
 
@@ -21,13 +25,13 @@ const App = () => {
 
 const Statistics = ({good, neutral, bad, total}) => {
   if (total == 0) {
-    return (
+    return(
     <div>
       <p>No feedback given</p>
     </div>
     )
   }
-    return (
+    return(
       <div>
         <table>
             <StatisicLine text='good' value={good}/>
@@ -41,12 +45,24 @@ const Statistics = ({good, neutral, bad, total}) => {
     )
 }
 
+//each individual statistic
 const StatisicLine = ({text, value}) => {
-  return (
+  return(
     <tr>
       <td>{text}</td>
       <td>{value}</td>
     </tr>
+  )
+}
+
+//buttons used to submit feedback
+const Button = ({increaseGood, increaseNeutral, increaseBad}) => {
+  return(
+    <div>
+      <button onClick={increaseGood}>good</button>
+      <button onClick={increaseNeutral}>neutral</button>
+      <button onClick={increaseBad}>bad</button>
+    </div>
   )
 }
 

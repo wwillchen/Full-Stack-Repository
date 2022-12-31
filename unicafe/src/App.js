@@ -29,16 +29,25 @@ const Statistics = ({good, neutral, bad, total}) => {
   }
     return (
       <div>
-        <StatisicLine text='good' value={good}/>
-        <StatisicLine text='neutral' value={neutral}/>
-        <StatisicLine text='bad' value={bad}/>
-        <StatisicLine text='all' value={total}/>
-        <StatisicLine text='average' value={total / 3}/>
-        <StatisicLine text='positive' value={good / total + ' %'}/>
+        <table>
+            <StatisicLine text='good' value={good}/>
+            <StatisicLine text='neutral' value={neutral}/>
+            <StatisicLine text='bad' value={bad}/>
+            <StatisicLine text='all' value={total}/>
+            <StatisicLine text='average' value={total / 3}/>
+            <StatisicLine text='positive' value={good / total + ' %'}/>
+        </table>
       </div>
     )
 }
 
-const StatisicLine = ({text, value}) => <div>{text} {value}</div>
+const StatisicLine = ({text, value}) => {
+  return (
+    <tr>
+      <td>{text}</td>
+      <td>{value}</td>
+    </tr>
+  )
+}
 
 export default App;

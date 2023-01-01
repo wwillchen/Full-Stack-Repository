@@ -12,23 +12,48 @@ const App = () => {
   ]
    
   const [selected, setSelected] = useState(0)
-  
+  const [votes, setVotes] = useState(Array(anecdotes.length).fill(0))
+
+  //randomize function that picks up unique numbers
   const randomizeSelected = () => {
-    const value = Math.floor(Math.random() * anecdotes.length)
-    if (value == selected){
-      return randomizeSelected()
-    }
-    else {
-      return setSelected(value)
+    while (true) {
+      const value = Math.floor(Math.random() * anecdotes.length)
+      if (value != selected) {
+        setSelected(value)
+        break
+      }
     }
   }
-  
+
+  const incrementVote = () => {
+    const copy = [...votes]
+    copy[selected] += 1
+    setVotes(copy)
+    console.log(Math.max(...votes))
+  }
+
   return (
     <div>
-      <p>{anecdotes[selected]}</p>
-      <button onClick={randomizeSelected}>next anecdote</button>
+      <h1>Anecdote of the day</h1>
+      <Anecdote text={anecdotes[selected]} voteTotal={'has ' + votes[selected] + ' votes'}/>
+      <Button onClick={incrementVote} text='vote'/>
+      <Button onClick={randomizeSelected} text='next anecdote'/>
+      <h1>Anecdote with the most votes</h1>
+      <Anecdote text={anecdotes[votes.indexOf(Math.max(...votes))]} voteTotal={'has ' + votes[selected] + ' votes'}/>
     </div>
   )
 }
+
+const Anecdote = ({text, voteTotal}) => {
+  return (
+    <div>
+      <p>{text}</p>
+      <p>{voteTotal}</p>
+    </div>
+  )
+}
+
+const Button = ({onClick, text}) => 
+  <><button onClick={onClick}>{text}</button></>
 
 export default App;

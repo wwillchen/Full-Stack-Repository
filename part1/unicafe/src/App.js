@@ -8,18 +8,18 @@ const Statistics = ({good, neutral, bad, total}) => {
     </div>
     )
   }
-    return(
-      <div>
-        <table>
-            <StatisicLine text='good' value={good}/>
-            <StatisicLine text='neutral' value={neutral}/>
-            <StatisicLine text='bad' value={bad}/>
-            <StatisicLine text='all' value={total}/>
-            <StatisicLine text='average' value={total / 3}/>
-            <StatisicLine text='positive' value={good / total + ' %'}/>
-        </table>
-      </div>
-    )
+  return(
+    <div>
+      <table>
+          <StatisicLine text='good' value={good}/>
+          <StatisicLine text='neutral' value={neutral}/>
+          <StatisicLine text='bad' value={bad}/>
+          <StatisicLine text='all' value={total}/>
+          <StatisicLine text='average' value={total / 3}/>
+          <StatisicLine text='positive' value={good / total + ' %'}/>
+      </table>
+    </div>
+  )
 }
 
 //each individual statistic

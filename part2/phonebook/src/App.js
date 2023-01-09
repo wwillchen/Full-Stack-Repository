@@ -3,6 +3,8 @@ import Filter from './components/filter'
 import PersonForm from './components/personForm'
 import Persons from './components/persons'
 import numberService from './services/numberService'
+import notifications from './components/notifications'
+import './index.css'
 
 
 const App = () => {
@@ -11,6 +13,7 @@ const App = () => {
   const [newNumber, setNewNumber] = useState('')
   const [newFilter, setNewFilter] = useState('')
   const [filter, setFilter] = useState(false)
+  const [errorMessage, setErrorMessage] = useState(null)
 
   useEffect(() => {
     numberService
@@ -24,7 +27,10 @@ const App = () => {
     if(window.confirm(`Delete ${name}?`)){
       numberService.deleteNumber(id)
       .then(response => {
-        setPersons(persons.filter(personID => personID !== id))
+        setPersons(persons.filter(person => person.id !== id))
+      })
+      .catch(error => {
+        setErrorMessage(notifications.Failed(newName))
       })
     }
   }
@@ -43,6 +49,7 @@ const App = () => {
           setPersons(persons.concat(Entry))
           setNewName('')
           setNewNumber('')
+          setErrorMessage(notifications.Approval(newName))
         })
     }
     
@@ -84,6 +91,7 @@ const App = () => {
   return(
     <div>
       <h2>Phonebook</h2>
+      <div>{errorMessage}</div>
       <Filter inputFilter={newFilter} handleInputFilter={handleNewFilter}/>
       <h2>Add a new</h2>
       <PersonForm inputName={newName} inputNumber={newNumber} handleNewSubmission={addNumber}
